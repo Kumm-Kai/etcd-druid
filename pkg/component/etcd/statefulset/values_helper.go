@@ -123,6 +123,9 @@ func GenerateValues(
 		PeerTLSChangedToEnabled: peerTLSChangedToEnabled,
 
 		UseEtcdWrapper: useEtcdWrapper,
+
+		StatefulSetStartIndex: etcd.Spec.StatefulSetStartIndex,
+		AdditionalHostAliases: etcd.Spec.AdditionalHostAliases,
 	}
 
 	values.EtcdCommandArgs = getEtcdCommandArgs(values)

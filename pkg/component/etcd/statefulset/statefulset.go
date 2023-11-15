@@ -490,6 +490,12 @@ func (c *component) createOrPatch(ctx context.Context, sts *appsv1.StatefulSet, 
 		if c.values.PriorityClassName != nil {
 			sts.Spec.Template.Spec.PriorityClassName = *c.values.PriorityClassName
 		}
+		if c.values.StatefulSetStartIndex != nil {
+			sts.Spec.Ordinals = &appsv1.StatefulSetOrdinals{Start: *c.values.StatefulSetStartIndex}
+		}
+		if len(c.values.AdditionalHostAliases) > 0 {
+			sts.Spec.Template.Spec.HostAliases = append(sts.Spec.Template.Spec.HostAliases, c.values.AdditionalHostAliases...)
+		}
 		if c.values.UseEtcdWrapper {
 			// sections to add only when using etcd wrapper
 			// TODO: @aaronfern add this back to sts.Spec when UseEtcdWrapper becomes GA

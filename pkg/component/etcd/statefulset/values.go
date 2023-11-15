@@ -132,4 +132,10 @@ type Values struct {
 
 	// UseEtcdWrapper enables the use of etcd-wrapper image and a compatible version of etcd-backup-restore
 	UseEtcdWrapper bool
+
+	// StatefulSetStartIndex sets the statefulSets `spec.ordinals.start` value if supported (since k8s 1.27)
+	StatefulSetStartIndex *int32
+
+	// AdditionalHostAliases allows specifying additional hosts aliases for the statefulSet
+	AdditionalHostAliases []corev1.HostAlias
 }

@@ -308,6 +308,12 @@ type EtcdSpec struct {
 	// VolumeClaimTemplate defines the volume claim template to be created
 	// +optional
 	VolumeClaimTemplate *string `json:"volumeClaimTemplate,omitempty"`
+	// StatefulSetStartIndex sets the statefulSets `spec.ordinals.start` value if supported (since k8s 1.27)
+	// +optional
+	StatefulSetStartIndex *int32 `json:"statefulsetStartIndex,omitempty"`
+	// AdditionalHostAliases allows specifying additional hosts aliases for the statefulSet
+	// +optional
+	AdditionalHostAliases []corev1.HostAlias `json:"additionalHostAliases,omitempty"`
 }
 
 // CrossVersionObjectReference contains enough information to let you identify the referred resource.
