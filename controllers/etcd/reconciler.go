@@ -16,7 +16,6 @@ package etcd
 
 import (
 	"context"
-	"fmt"
 	"path/filepath"
 
 	druidv1alpha1 "github.com/gardener/etcd-druid/api/v1alpha1"
@@ -297,9 +296,12 @@ func (r *Reconciler) delete(ctx context.Context, etcd *druidv1alpha1.Etcd) (ctrl
 func (r *Reconciler) reconcileEtcd(ctx context.Context, logger logr.Logger, etcd *druidv1alpha1.Etcd) reconcileResult {
 	// Check if Spec.Replicas is odd or even.
 	// TODO(timuthy): The following checks should rather be part of a validation. Also re-enqueuing doesn't make sense in case the values are invalid.
-	if etcd.Spec.Replicas > 1 && etcd.Spec.Replicas&1 == 0 {
-		return reconcileResult{err: fmt.Errorf("Spec.Replicas should not be even number: %d", etcd.Spec.Replicas)}
-	}
+
+	// NOTE(hackathon): Commented out as we need to be able to scale the etcd resource & statefulset to even replicas.
+	// In our case this doesn't mean that the etcd cluster will have an even amount of members
+	// if etcd.Spec.Replicas > 1 && etcd.Spec.Replicas&1 == 0 {
+	// 	return reconcileResult{err: fmt.Errorf("Spec.Replicas should not be even number: %d", etcd.Spec.Replicas)}
+	// }
 
 	etcdImage, etcdBackupImage, initContainerImage, err := druidutils.GetEtcdImages(etcd, r.imageVector, r.config.FeatureGates[features.UseEtcdWrapper])
 	if err != nil {
